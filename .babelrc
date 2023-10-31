@@ -1,0 +1,4 @@
+{
+  "outDir": "index.js",
+  "presets": ["@babel/preset-env"]
+}
