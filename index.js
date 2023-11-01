@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import User from "./models/User.js";
+import config from "./config/key.js";
 
 const app = express();
 const port = 5000;
@@ -9,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 mongoose
-  .connect("mongodb+srv://lee121205:lee121205@cluster0.2xsfvyp.mongodb.net/?retryWrites=true&w=majority")
+  .connect(config.mongoURI)
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
 
