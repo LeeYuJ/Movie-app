@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import User from "./models/User";
+import User from "./models/User.js";
 
 const app = express();
 const port = 5000;
@@ -13,17 +13,19 @@ mongoose
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
 
-app.get("/", (req, res) => res.send("hello"));
+app.get("/", (req, res) => res.send("hello World"));
 
-app.post("/register", (req, res) => {
+app.post("/register", async (req, res) => {
   const user = new User(req.body);
 
-  user.save((err, userInfo) => {
-    if (err) return res.json({ success: false, err });
-    return res.status(200).json({
-      success: true,
+  await user
+    .save()
+    .then(() => {
+      res.status(200).json({ success: true });
+    })
+    .catch((err) => {
+      res.json({ success: false, err });
     });
-  });
 });
 
 app.listen(port, () => console.log("listening on port"));
